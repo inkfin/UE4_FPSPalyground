@@ -48,7 +48,8 @@ void AMannequin::BeginPlay()
 		Gun->AttachToComponent(GetMesh(), FAttachmentTransformRules(EAttachmentRule::SnapToTarget, true), TEXT("GripPoint"));
 	}
 
-	Gun->AnimInstance = Mesh1P->GetAnimInstance();
+	Gun->AnimInstanceFP = Mesh1P->GetAnimInstance();
+	Gun->AnimInstanceTP = GetMesh()->GetAnimInstance();
 
 	if (InputComponent != nullptr)
 	{
@@ -67,7 +68,6 @@ void AMannequin::Tick(float DeltaTime)
 void AMannequin::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
-
 }
 
 void AMannequin::UnPossessed()
@@ -75,7 +75,9 @@ void AMannequin::UnPossessed()
 	Super::UnPossessed();
 
 	if (Gun != nullptr)
+	{
 		Gun->AttachToComponent(GetMesh(), FAttachmentTransformRules(EAttachmentRule::SnapToTarget, true), TEXT("GripPoint"));
+	}
 }
 
 void AMannequin::PullTrigger()
